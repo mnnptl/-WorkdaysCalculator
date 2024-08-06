@@ -21,19 +21,18 @@
             background-color: transparent !important;
             padding: 20px;
         }
-        .calculator h2 {
-            font-family: "Inter", sans-serif;
-            font-size: 120%;
-            font-weight: 600 !important;
-        }
         .calculator {
             background-color: white;
             padding: 20px;
             border: 1px solid #ddd;
             border-radius: 10px;
-            max-width: 400px;
             width: 100%;
-            margin: 0px;
+            max-width: 400px;
+        }
+        .calculator h2 {
+            font-family: "Inter", sans-serif;
+            font-size: 120%;
+            font-weight: 600 !important;
         }
         .input-group {
             font-family: "Inter", sans-serif;
@@ -61,15 +60,6 @@
             margin-top: 20px;
             font-weight: bold;
         }
-
-    hr {
-        height: 1px;
-        margin-top: 30px;
-        margin-bottom: 30px;
-        font-size: 0;
-        border: 0;
-        background-color: #dddddd
-    }
     </style>
 </head>
 <body>
@@ -81,20 +71,14 @@
             const [vacationDays, setVacationDays] = React.useState(25);
             const [sickDays, setSickDays] = React.useState(5);
             const [publicHolidays, setPublicHolidays] = React.useState(11);
-            const [adminDays, setAdminDays] = React.useState(15);
-            const [marketingDays, setMarketingDays] = React.useState(18);
-            const [trainingDays, setTrainingDays] = React.useState(12);
             const [workdays, setWorkdays] = React.useState(0);
-            const [billableDays, setBillableDays] = React.useState(0);
 
             React.useEffect(() => {
                 const totalWeeks = 52;
                 const totalDays = totalWeeks * daysPerWeek;
                 const calculatedWorkdays = totalDays - vacationDays - sickDays - publicHolidays;
-                const calculatedBillableDays = calculatedWorkdays - adminDays - marketingDays - trainingDays;
                 setWorkdays(calculatedWorkdays);
-                setBillableDays(calculatedBillableDays);
-            }, [daysPerWeek, vacationDays, sickDays, publicHolidays, adminDays, marketingDays, trainingDays]);
+            }, [daysPerWeek, vacationDays, sickDays, publicHolidays]);
 
             return (
                 <div className="calculator">
@@ -154,42 +138,6 @@
                     <div className="results">
                         <p>➡️ Nombre de jours travaillés par an : {workdays}</p>
                         <p>➡️ Nombre d'heures travaillées par an : {workdays * hoursPerDay}</p>
-                    </div>
-                    <hr></hr>
-                    <h2>Calculateur de jours facturables par an</h2>
-                    <div className="input-group">
-                        <label htmlFor="adminDays">🖋️ Jours d'administratif et de gestion</label>
-                        <input
-                            id="adminDays"
-                            type="number"
-                            value={adminDays}
-                            onChange={(e) => setAdminDays(Number(e.target.value))}
-                            min="0"
-                        />
-                    </div>
-                    <div className="input-group">
-                        <label htmlFor="marketingDays">💼 Jours de prospection et marketing</label>
-                        <input
-                            id="marketingDays"
-                            type="number"
-                            value={marketingDays}
-                            onChange={(e) => setMarketingDays(Number(e.target.value))}
-                            min="0"
-                        />
-                    </div>
-                    <div className="input-group">
-                        <label htmlFor="trainingDays">📚 Jours de formation et veille</label>
-                        <input
-                            id="trainingDays"
-                            type="number"
-                            value={trainingDays}
-                            onChange={(e) => setTrainingDays(Number(e.target.value))}
-                            min="0"
-                        />
-                    </div>
-                    <div className="results">
-                        <p>➡️ Nombre de jours facturables par an : {billableDays}</p>
-                        <p>➡️ Nombre d'heures facturables par an : {billableDays * hoursPerDay}</p>
                     </div>
                 </div>
             );
