@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculateur de jours travaillés pour freelance</title>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .calculator {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .results {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const WorkdaysCalculator = () => {
+            const [daysPerWeek, setDaysPerWeek] = React.useState(5);
+            const [hoursPerDay, setHoursPerDay] = React.useState(8);
+            const [vacationDays, setVacationDays] = React.useState(25);
+            const [sickDays, setSickDays] = React.useState(5);
+            const [publicHolidays, setPublicHolidays] = React.useState(11);
+            const [workdays, setWorkdays] = React.useState(0);
+
+            React.useEffect(() => {
+                const totalWeeks = 52;
+                const totalDays = totalWeeks * daysPerWeek;
+                const workDays = totalDays - vacationDays - sickDays - publicHolidays;
+                setWorkdays(workDays);
+            }, [daysPerWeek, vacationDays, sickDays, publicHolidays]);
+
+            return (
+                <div className="calculator">
+                    <h2>Calculateur de jours travaillés pour freelance</h2>
+                    <div className="input-group">
+                        <label htmlFor="daysPerWeek">Jours travaillés par semaine</label>
+                        <input
+                            id="daysPerWeek"
+                            type="number"
+                            value={daysPerWeek}
+                            onChange={(e) => setDaysPerWeek(Number(e.target.value))}
+                            min="1"
+                            max="7"
+                        />
+                    </div>
+                    <div className="input-group">
+                        <label htmlFor="hoursPerDay">Heures travaillées par jour</label>
+                        <input
+                            id="hoursPerDay"
+                            type="number"
+                            value={hoursPerDay}
+                            onChange={(e) => setHoursPerDay(Number(e.target.value))}
+                            min="1"
+                            max="24"
+                        />
+                    </div>
+                    <div className="input-group">
+                        <label htmlFor="vacationDays">Jours de congés par an</label>
+                        <input
+                            id="vacationDays"
+                            type="number"
+                            value={vacationDays}
+                            onChange={(e) => setVacationDays(Number(e.target.value))}
+                            min="0"
+                        />
+                    </div>
+                    <div className="input-group">
+                        <label htmlFor="sickDays">Jours de maladie prévus</label>
+                        <input
+                            id="sickDays"
+                            type="number"
+                            value={sickDays}
+                            onChange={(e) => setSickDays(Number(e.target.value))}
+                            min="0"
+                        />
+                    </div>
+                    <div className="input-group">
+                        <label htmlFor="publicHolidays">Jours fériés</label>
+                        <input
+                            id="publicHolidays"
+                            type="number"
+                            value={publicHolidays}
+                            onChange={(e) => setPublicHolidays(Number(e.target.value))}
+                            min="0"
+                        />
+                    </div>
+                    <div className="results">
+                        <p>Nombre de jours travaillés par an : {workdays}</p>
+                        <p>Nombre d'heures travaillées par an : {workdays * hoursPerDay}</p>
+                    </div>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<WorkdaysCalculator />, document.getElementById('root'));
+    </script>
+</body>
+</html>
