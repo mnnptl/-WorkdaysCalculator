@@ -76,12 +76,15 @@
             const [marketingDays, setMarketingDays] = React.useState(18);
             const [trainingDays, setTrainingDays] = React.useState(12);
             const [workdays, setWorkdays] = React.useState(0);
+            const [billableDays, setBillableDays] = React.useState(0);
 
             React.useEffect(() => {
                 const totalWeeks = 52;
                 const totalDays = totalWeeks * daysPerWeek;
-                const workDays = totalDays - vacationDays - sickDays - publicHolidays - adminDays - marketingDays - trainingDays;
-                setWorkdays(workDays);
+                const calculatedWorkdays = totalDays - vacationDays - sickDays - publicHolidays;
+                const calculatedBillableDays = calculatedWorkdays - adminDays - marketingDays - trainingDays;
+                setWorkdays(calculatedWorkdays);
+                setBillableDays(calculatedBillableDays);
             }, [daysPerWeek, vacationDays, sickDays, publicHolidays, adminDays, marketingDays, trainingDays]);
 
             return (
@@ -171,7 +174,9 @@
                     </div>
                     <div className="results">
                         <p>➡️ Nombre de jours travaillés par an : {workdays}</p>
+                        <p>➡️ Nombre de jours facturables par an : {billableDays}</p>
                         <p>➡️ Nombre d'heures travaillées par an : {workdays * hoursPerDay}</p>
+                        <p>➡️ Nombre d'heures facturables par an : {billableDays * hoursPerDay}</p>
                     </div>
                 </div>
             );
