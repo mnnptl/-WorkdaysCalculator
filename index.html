@@ -142,6 +142,10 @@
                             min="0"
                         />
                     </div>
+                    <div className="results">
+                        <p>➡️ Nombre de jours travaillés par an : {workdays}</p>
+                        <p>➡️ Nombre d'heures travaillées par an : {workdays * hoursPerDay}</p>
+                    </div>
                     <div className="input-group">
                         <label htmlFor="adminDays">🖋️ Jours d'administratif et de gestion</label>
                         <input
@@ -173,9 +177,7 @@
                         />
                     </div>
                     <div className="results">
-                        <p>➡️ Nombre de jours travaillés par an : {workdays}</p>
                         <p>➡️ Nombre de jours facturables par an : {billableDays}</p>
-                        <p>➡️ Nombre d'heures travaillées par an : {workdays * hoursPerDay}</p>
                         <p>➡️ Nombre d'heures facturables par an : {billableDays * hoursPerDay}</p>
                     </div>
                 </div>
